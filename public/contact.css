@@ -1,0 +1,207 @@
+:root {
+    --white: #FFF8DC;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:link a:visited {
+    color: var(--white);
+}
+
+.ROW {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* #contener {
+    max-width: 1200px;
+    margin: 0 auto;
+  } */
+
+body {
+    background-color: #DEB887;
+}
+
+header {
+    height: 120px;
+    padding: 7px;
+    color: #090505;
+    border-radius: 7px;
+    box-shadow: 0px 12px 9px -7px;
+    background-color: #fff8dc;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+.choiciesclass{
+    height: 250px;
+    width: 500px;
+    border: 3px solid grey;
+    display: flex;
+    justify-content: space-between;
+}
+.mail_us,
+.message_local {
+    height: 90px;
+    width: 170px;
+    border: 3px solid grey;
+    border-radius: 7px;
+    margin: 70px 50px;
+    font-size: 17px;
+}
+
+.message_card {
+    display: none;
+}
+
+.message_card_show {
+    width: 800px;
+}
+
+.none {
+    display: none;
+}
+
+#zone1,
+#zone2,
+#zone3 {
+    width: 100%;
+    /* padding: 17px; */
+    margin-top: 17px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#name,
+#phone {
+    height: 40px;
+    width: 300px;
+    display: inline-block;
+    border: 3px solid grey;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+#submit,
+#mail {
+    height: 40px;
+    width: 450px;
+    border: 3px solid grey;
+    border-radius: 7px;    
+    display: inline-block;
+    font-size: 17px;
+}
+#submit{
+    background-color: cadetblue;
+}
+#text {
+    width: 766px;
+    height: 300px;
+    display: inline-block;
+    border: 3px solid grey;
+    border-radius: 7px;
+    font-size: 17px;
+}
+
+footer {
+    height: 30px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    color: slategrey;
+    background-color: #DEB887;
+    font-size: 10px;
+}
+
+#cont,
+#editing_page {
+    padding-top: 10px;
+    color: slategrey;
+    text-decoration: none;
+    /* 超連結去除底線 */
+}
+
+
+
+/* 手機 mobilephone */
+@media only screen and (min-width: 0px) {
+    .col-mobile-0 {
+        width: 0;
+    }
+
+    .col-mobile-12 {
+        width: 100.0%
+    }
+}
+
+/* 桌機 desktop */
+@media only screen and (min-width:700px) {
+    .col-pc-0 {
+        width: 0;
+    }
+
+    .col-pc-1 {
+        width: 8.33%
+    }
+
+    .col-pc-2 {
+        width: 16.66%
+    }
+
+    .col-pc-3 {
+        width: 25.00%
+    }
+
+    .col-pc-4 {
+        width: 33.33%
+    }
+
+    .col-pc-5 {
+        width: 41.66%
+    }
+
+    .col-pc-6 {
+        width: 50.00%
+    }
+
+    .col-pc-7 {
+        width: 58.33%
+    }
+
+    .col-pc-8 {
+        width: 66.66%
+    }
+
+    .col-d-9 {
+        width: 75.00%
+    }
+
+    .col-pc-10 {
+        width: 83.33%
+    }
+
+    .col-pc-11 {
+        width: 91.66%
+    }
+
+    .col-pc-12 {
+        width: 100.0%
+    }
+}
