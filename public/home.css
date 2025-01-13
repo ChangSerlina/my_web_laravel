@@ -1,0 +1,585 @@
+/**
+ * Base Variables
+ */
+:root {
+    --color-alpha: #9f8f68;
+    --color-black: #0a0a0a;
+    --color-grey: #f8f9f9;
+    --color-white: #fff;
+}
+
+/* 內容設定 */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    font-size: 100%;
+    line-height: 1.6;
+    background-color: var(--color-grey);
+    font-feature-settings: 'liga' 0;
+
+    @media (min-width: 20em) {
+        font-size: 102.5%;
+    }
+
+    @media (min-width: 30em) {
+        font-size: 105%;
+    }
+
+    @media (min-width: 54em) {
+        font-size: 107.5%;
+    }
+
+    @media (min-width: 64em) {
+        font-size: 110%;
+    }
+
+    @media (min-width: 76.5em) {
+        font-size: 115%;
+    }
+
+    @media (min-width: 114em) {
+        font-size: 125%;
+    }
+}
+
+.item:hover,
+.active {
+    cursor: pointer;
+    border-bottom: var(--color-alpha) 3px solid;
+}
+
+.active {
+    will-change: opacity;
+    transition: opacity 2s ease-in-out;
+}
+
+/**
+  * Base Settings/Overwrite Normalize
+  */
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1,
+h2 {
+    margin: 0;
+}
+
+h1 {
+    @media (min-width: 54em) {
+        font-size: 3em;
+    }
+
+    @media (min-width: 76.5em) {
+        font-size: 3.5em;
+    }
+}
+
+p {
+    margin: 0 0 0.75em;
+}
+
+a {
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.4s ease-in-out;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--color-alpha);
+    }
+}
+
+figure {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+}
+
+/**
+  * Text Selection
+  */
+::selection {
+    color: var(--color-white);
+    background-color: var(--color-alpha);
+    text-shadow: none;
+}
+
+/**
+  * Sections
+  */
+section {
+    position: relative;
+}
+
+.section-padding {
+    padding: 4em 0;
+
+    &--lg {
+        padding: 6em 0;
+    }
+
+    &--sm {
+        padding: 2em 0;
+    }
+}
+
+/**
+  * Class Container (BEM)
+  */
+[class*='__container'] {
+    position: relative;
+    z-index: 1;
+}
+
+/**
+  * Blog page
+  */
+.previews {
+    @media (max-width: 54em) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &>* {
+        &:first-child {
+            position: relative;
+            height: 30em;
+            background-color: var(--color-black);
+
+            @media (min-width: 54em) {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 45%;
+            }
+        }
+
+        &:last-child {
+            min-height: 100vh;
+
+            @media (min-width: 54em) {
+                margin-left: 45%;
+            }
+        }
+    }
+}
+
+/**
+  * Tabs
+  * On the Blog page for posts and categories
+  */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 1em;
+
+    @media (min-width: 54em) {
+        padding-left: 4em;
+        padding-right: 4em;
+    }
+
+    @media (min-width: 114em) {
+        padding-left: 10em;
+        padding-right: 10em;
+    }
+}
+
+/**
+  * Blog Post Preview
+  * On the Blog page
+  */
+.previews__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 2em;
+    color: var(--color-white);
+}
+
+.preview {
+    transition: background-color 0.2s ease-in-out;
+    margin: 3em 2em;
+
+    &:nth-child(even) {
+        background-color: var(--color-white);
+    }
+
+    &:hover {
+        background-color: var(--color-alpha)--light;
+
+        .preview__more {
+            box-shadow: inset 175px 0 0 0 var(--color-alpha);
+            color: var(--color-white);
+        }
+    }
+
+    &__img {
+        will-change: opacity;
+        animation: fade-in 1s both;
+    }
+
+    &__link {
+        display: block;
+        padding: 2em 1em;
+
+        @media (min-width: 54em) {
+            padding: 4em 8em;
+        }
+
+        @media (min-width: 114em) {
+            padding-left: 10em;
+            padding-right: 10em;
+        }
+    }
+}
+
+.preview__header {
+    color: var(--color-alpha);
+
+    margin-bottom: 0.5em;
+}
+
+.preview__more {
+    border: 3px solid;
+    color: var(--color-alpha);
+    padding: 8px;
+}
+
+/**
+  * Category Card
+  * On the blog page under category tab
+  */
+.cards {
+    padding: 2em 1em;
+
+    @media (min-width: 54em) {
+        padding: 4em 2em;
+    }
+}
+
+.card {
+    &__link {
+        position: relative;
+        display: block;
+        background-color: var(--color-white);
+        transition: background-color 0.2s ease-in-out;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            height: 100%;
+            width: 100%;
+
+            opacity: 0;
+            will-change: opacity;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        &:hover {
+            background-color: var(--color-alpha)--light;
+
+            &:after {
+                opacity: 1;
+            }
+
+            .card__more {
+                box-shadow: inset 175px 0 0 0 var(--color-alpha);
+                color: var(--color-white);
+            }
+        }
+    }
+
+    &__img {
+        position: relative;
+        height: 12em;
+        background-color: var(--color-black);
+    }
+
+    &__container {
+        padding: 2em 1em;
+    }
+
+    &__header {
+        color: var(--color-alpha);
+    }
+
+    &__count {
+        color: var(--color-black);
+    }
+}
+
+/**
+  * Footer
+  */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 2em;
+    padding-right: 2em;
+
+    @media (min-width: 30em) {
+        flex-direction: row;
+    }
+
+    &__social {
+        display: flex;
+        margin-top: 1em;
+
+        @media (min-width: 30em) {
+            margin-top: 0;
+        }
+
+        &>*:not(:last-child) {
+            margin-right: 1em;
+        }
+    }
+}
+
+/**
+  * Animations
+  */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    will-change: opacity;
+    animation: fade-in 2s both;
+}
+
+/**
+  * Absolute Background Cover
+  */
+.absolute-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+/**
+  * Color Helpers
+  */
+.bg-black {
+    background-color: var(--color-black);
+}
+
+.bg-white {
+    background-color: var(--color-white);
+}
+
+/* 設定RWD-col */
+.col {
+    flex: 100%;
+}
+
+.col-1 {
+    width: 8.33%;
+}
+
+.col-2 {
+    width: 16.66%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.33%;
+}
+
+.col-5 {
+    width: 41.66%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.33%;
+}
+
+.col-8 {
+    width: 66.66%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-10 {
+    width: 83.33%;
+}
+
+.col-11 {
+    width: 91.66%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+/* 設定小銀幕的col */
+@media (max-width: 1000px) {
+    .col-sm {
+        flex: 100%;
+    }
+
+    .col-sm-1 {
+        flex: 0 0 auto;
+        width: 8.33333333%;
+    }
+
+    .col-sm-2 {
+        flex: 0 0 auto;
+        width: 16.66666667%;
+    }
+
+    .col-sm-3 {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+
+    .col-sm-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+    }
+
+    .col-sm-5 {
+        flex: 0 0 auto;
+        width: 41.66666667%;
+    }
+
+    .col-sm-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+
+    .col-sm-7 {
+        flex: 0 0 auto;
+        width: 58.33333333%;
+    }
+
+    .col-sm-8 {
+        flex: 0 0 auto;
+        width: 66.66666667%;
+    }
+
+    .col-sm-9 {
+        flex: 0 0 auto;
+        width: 75%;
+    }
+
+    .col-sm-10 {
+        flex: 0 0 auto;
+        width: 83.33333333%;
+    }
+
+    .col-sm-11 {
+        flex: 0 0 auto;
+        width: 91.66666667%;
+    }
+
+    .col-sm-12 {
+        width: 100%;
+    }
+}
+
+/* 設定中銀幕的col */
+@media (max-width: 1100px) {
+    .col-lg {
+        flex: 100%;
+    }
+
+    .col-lg-1 {
+        flex: 0 0 auto;
+        width: 8.33333333%;
+    }
+
+    .col-lg-2 {
+        flex: 0 0 auto;
+        width: 16.66666667%;
+    }
+
+    .col-lg-3 {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+
+    .col-lg-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+    }
+
+    .col-lg-5 {
+        flex: 0 0 auto;
+        width: 41.66666667%;
+    }
+
+    .col-lg-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+
+    .col-lg-7 {
+        flex: 0 0 auto;
+        width: 58.33333333%;
+    }
+
+    .col-lg-8 {
+        flex: 0 0 auto;
+        width: 66.66666667%;
+    }
+
+    .col-lg-9 {
+        flex: 0 0 auto;
+        width: 75%;
+    }
+
+    .col-lg-10 {
+        flex: 0 0 auto;
+        width: 83.33333333%;
+    }
+
+    .col-lg-11 {
+        flex: 0 0 auto;
+        width: 91.66666667%;
+    }
+
+    .col-lg-12 {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}

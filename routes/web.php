@@ -14,7 +14,8 @@ use App\Http\Controllers\ContactController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('home');
 });
 
 Route::get('/contact', [ContactController::class, 'report_show'])->name('report_show');
