@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,7 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-    return view('home');
-});
-
 Route::get('/contact', [ContactController::class, 'report_show'])->name('report_show');
 Route::post('/contact/store', [ContactController::class, 'reporting']) ->name('reporting');
+
+Route::get('/{page_chose?}', [HomeController::class, 'home_show'])->name('home_show');

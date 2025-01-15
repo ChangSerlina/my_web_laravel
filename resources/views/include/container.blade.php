@@ -1,7 +1,7 @@
 <div class="tab">
     <ul itemscope itemtype="http://schema.org/Blog">
         <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="#" itemprop="url">
+            <a class="preview__link" href="{{ route('home_show', ['page_chose' => 'Roof_Party']) }}" itemprop="url">
                 <span class="preview__date" itemprop="datePublished" datetime="2016-09-08T00:00:00-07:00">Sep 8, 2016</span>
                 <h2 class="preview__header" itemprop="name">Roof Party</h2>
                 <p class="preview__excerpt" itemprop="description">Banh mi pug you probably haven’t heard of them occupy, drinking vinegar humblebrag vinyl locavore master cleanse sartorial bicycle rights 90’s kickstarter hashtag. 3 wolf moon XOXO man braid chartreuse....</p>
@@ -9,7 +9,7 @@
             </a>
         </li>
         <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="#" itemprop="url">
+            <a class="preview__link" href="{{ route('home_show', ['page_chose' => 'Craft_Beer']) }}" itemprop="url">
                 <span class="preview__date" itemprop="datePublished" datetime="2016-09-07T00:00:00-07:00">Sep 7, 2016</span>
                 <h2 class="preview__header" itemprop="name">Craft Beer</h2>
                 <p class="preview__excerpt" itemprop="description">Tbh vaporware mumblecore iceland echo park DIY. Plaid woke next level enamel pin, vegan cred salvia pug. XOXO sartorial synth gluten-free, cold-pressed mumblecore craft beer helvetica. Vegan lyft squid, vice...</p>
