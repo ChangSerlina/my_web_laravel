@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name',255)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('phone', 255)->nullable();
-            $table->string('information',5000)->nullable(); // 約 200中 300英
+            $table->string('information',5000)->nullable();
             $table->timestamps();
         });
     }

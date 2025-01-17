@@ -18,34 +18,11 @@
 <body>
     <section class="previews">
         <div>
-            <div>
-                @switch($page_chose_1)
-                @case('include.Roof_Party')
-                <figure class="absolute-bg preview__img" style="background-image: url('image/osakajo.jpg');"></figure>
-                @case('include.Craft_Beer')
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=1003');"></figure>
-                @case('include.Next_Level_Blog')
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=433');"></figure>
-                @case('include.VHS_Selfies')
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=40');"></figure>
-                @case('include.Four_Dollar_Toast')
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=1074');"></figure>
-                @default
-                <figure class="absolute-bg preview__img" style="background-image: url('image/osakajo.jpg');"></figure>
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=1003');"></figure>
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=433');"></figure>
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=40');"></figure>
-                <figure class="absolute-bg preview__img" style="background-image: url('https://unsplash.it/2000/1200?image=1074');"></figure>
-                @endswitch
-                <div class="previews__container">
-                    <span>Welcome to</span>
-                    <h1>Serlina Web</h1>
-                </div>
-            </div>
+            @include('include.left', ['page_chose_1' => $page_chose_1,'articles' => $articles])
         </div> <!--要把資料夾名稱『include』給放進來-->
         <div>
             <div>@include('include.nav')</div>
-            <div>@include($page_chose_1)</div>
+            <div>@include($page_chose_1, ['articles' => $articles])</div>
         </div>
     </section>
 </body>

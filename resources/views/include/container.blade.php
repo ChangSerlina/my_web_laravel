@@ -1,45 +1,21 @@
 <div class="tab">
     <ul itemscope itemtype="http://schema.org/Blog">
+        @isset($articles)
+        @foreach ($articles as $article)
         <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
             <a class="preview__link" href="{{ route('home_show', ['page_chose' => 'Roof_Party']) }}" itemprop="url">
-                <span class="preview__date" itemprop="datePublished" datetime="2016-09-08T00:00:00-07:00">Sep 8, 2016</span>
-                <h2 class="preview__header" itemprop="name">Roof Party</h2>
-                <p class="preview__excerpt" itemprop="description">Banh mi pug you probably haven’t heard of them occupy, drinking vinegar humblebrag vinyl locavore master cleanse sartorial bicycle rights 90’s kickstarter hashtag. 3 wolf moon XOXO man braid chartreuse....</p>
+                <span class="preview__date" itemprop="datePublished">{{ $article->date }}</span>
+                <h2 class="preview__header" itemprop="name">{{ $article->title }}</h2>
+                @if(strlen($article->context)>30)
+                <p class="preview__excerpt" itemprop="description">{{mb_substr($article->context, 0, 30,'UTF-8')}}...</p>
+                @else
+                <p class="preview__excerpt" itemprop="description">{{ $article->context }}</p>
+                @endif
                 <span class="preview__more">Read More</span>
             </a>
         </li>
-        <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="{{ route('home_show', ['page_chose' => 'Craft_Beer']) }}" itemprop="url">
-                <span class="preview__date" itemprop="datePublished" datetime="2016-09-07T00:00:00-07:00">Sep 7, 2016</span>
-                <h2 class="preview__header" itemprop="name">Craft Beer</h2>
-                <p class="preview__excerpt" itemprop="description">Tbh vaporware mumblecore iceland echo park DIY. Plaid woke next level enamel pin, vegan cred salvia pug. XOXO sartorial synth gluten-free, cold-pressed mumblecore craft beer helvetica. Vegan lyft squid, vice...</p>
-                <span class="preview__more">Read More</span>
-            </a>
-        </li>
-        <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="#" itemprop="url">
-                <span class="preview__date" itemprop="datePublished" datetime="2016-09-06T00:00:00-07:00">Sep 6, 2016</span>
-                <h2 class="preview__header" itemprop="name">Next Level Blog</h2>
-                <p class="preview__excerpt" itemprop="description">Humblebrag ramps single-origin coffee, literally jean shorts polaroid mlkshk franzen williamsburg distillery venmo. Skateboard leggings disrupt banjo shoreditch blue bottle. Brooklyn church-key cronut hell of waistcoat, polaroid lomo chambray bitters...</p>
-                <span class="preview__more">Read More</span>
-            </a>
-        </li>
-        <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="#" itemprop="url">
-                <span class="preview__date" itemprop="datePublished" datetime="2016-09-05T00:00:00-07:00">Sep 5, 2016</span>
-                <h2 class="preview__header" itemprop="name">VHS Selfies</h2>
-                <p class="preview__excerpt" itemprop="description">8-bit typewriter scenester, crucifix tousled tilde leggings brunch chicharrones salvia deep v man bun. Master cleanse man braid disrupt banjo, deep v cray tumblr cronut. Truffaut street art everyday carry...</p>
-                <span class="preview__more">Read More</span>
-            </a>
-        </li>
-        <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="#" itemprop="url">
-                <span class="preview__date" itemprop="datePublished" datetime="2016-09-04T00:00:00-07:00">Sep 4, 2016</span>
-                <h2 class="preview__header" itemprop="name">Four Dollar Toast</h2>
-                <p class="preview__excerpt" itemprop="description">Flexitarian fixie keytar vice craft beer. Forage normcore cred austin brunch, put a bird on it actually. Chia put a bird on it skateboard, salvia paleo heirloom semiotics knausgaard selvage...</p>
-                <span class="preview__more">Read More</span>
-            </a>
-        </li>
+        @endforeach
+        @endisset
     </ul>
     <footer class="section-padding--sm footer">
         <a class="footer__archive" href="#">Archive</a>

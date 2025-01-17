@@ -199,6 +199,7 @@ section {
   * On the Blog page
   */
 .previews__container {
+    margin-top: 40Vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -206,7 +207,9 @@ section {
     height: 100%;
     width: 100%;
     padding: 2em;
+    opacity: 0.5;
     color: var(--color-white);
+    background-color: var(--color-alpha);
 }
 
 .preview {
@@ -396,6 +399,10 @@ section {
 
 .bg-white {
     background-color: var(--color-white);
+}
+
+.container_nav {
+    margin-left: 2em;
 }
 
 /* 設定RWD-col */
