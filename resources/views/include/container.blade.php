@@ -3,7 +3,7 @@
         @isset($articles)
         @foreach ($articles as $article)
         <li class="preview" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-            <a class="preview__link" href="{{ route('home_show', ['page_chose' => 'Roof_Party']) }}" itemprop="url">
+            <a class="preview__link" href="{{ route('home_show', ['page_chose' => $article->route]) }}" itemprop="url">
                 <span class="preview__date" itemprop="datePublished">{{ $article->date }}</span>
                 <h2 class="preview__header" itemprop="name">{{ $article->title }}</h2>
                 @if(strlen($article->context)>30)
