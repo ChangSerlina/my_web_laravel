@@ -184,7 +184,6 @@ section {
     padding: 1em;
 
     @media (min-width: 54em) {
-        padding-left: 4em;
         padding-right: 4em;
     }
 

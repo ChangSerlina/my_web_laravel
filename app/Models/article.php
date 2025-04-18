@@ -12,6 +12,7 @@ class article extends Model
 
     protected $fillable = [
         'class',
+        'route',
         'title',
         'context',
         'date',

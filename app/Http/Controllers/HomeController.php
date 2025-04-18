@@ -10,20 +10,33 @@ class HomeController extends Controller
 {
     public function home_show($page_chose = null)
     {
-        $class = 'travel';
-        $articles = $this->select_by_class($class) ? $this->select_by_class($class) : null;
+        if(!empty($page_chose)){
+            $articles = $this->select_by_route($page_chose);
+        }else{
+            $page_chose = 'travel';
+            $articles = $this->select_by_class($page_chose);
+        }
 
         switch ($page_chose) {
-            case 'Roof_Party':
-                $page_chose_1 = 'include.Roof_Party';
+            case 'osaka':
+                $page_chose_1 = 'include.osaka';
                 return view('home', compact('page_chose_1', 'articles'));
-            case 'Craft_Beer':
-                $page_chose_1 = 'include.Craft_Beer';
+            case 'tainan':
+                $page_chose_1 = 'include.tainan';
+                return view('home', compact('page_chose_1', 'articles'));
+            case 'malaysia':
+                $page_chose_1 = 'include.malaysia';
                 return view('home', compact('page_chose_1', 'articles'));
             default:
                 $page_chose_1 = 'include.container';
                 return view('home', compact('page_chose_1', 'articles'));
         }
+    }
+
+    public function select_by_route($route)
+    {
+        $article = article::where('route', $route)->orderBy('date', 'desc')->get();
+        return $article;
     }
 
     public function select_by_class($class)
