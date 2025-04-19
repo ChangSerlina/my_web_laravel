@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ParkingFeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +18,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/contact', [ContactController::class, 'report_show'])->name('report_show');
 Route::post('/contact/store', [ContactController::class, 'reporting']) ->name('reporting');
+
+Route::get('/parkingFee', [ParkingFeeController::class, 'parkingFee_show'])->name('parkingFee_show');
 
 Route::get('/{page_chose?}', [HomeController::class, 'home_show'])->name('home_show');
