@@ -1,4 +1,5 @@
 @include('header')
+    <link rel="stylesheet" href="{{ asset('parkingFee.css') }}">
 </head>
 
 <script>
@@ -25,13 +26,13 @@
                     });
                     s.tab[0].style.display = 'block';
                     s.tab[0].classList.add('active');
-                    s.tabs[0].classList.add('active');
+                    s.tabs[1].classList.add('active');
                 }
             },
 
             click: function() {
                 if (s.tabs.length) {
-                    var currentIdx = 0,
+                    var currentIdx = 1,
                         prevIdx = currentIdx;
 
                     [].forEach.call(s.tabs, function(tab, idx) {
@@ -116,6 +117,8 @@
                 @include('include.nav')
             </div>
             <div>
-                @include($page_chose_1, ['articles' => $articles])
+                <div class="tab">
+                    <h1>這是停車查詢頁面</h1>
+                </div>
             </div>
             @include('footer')
