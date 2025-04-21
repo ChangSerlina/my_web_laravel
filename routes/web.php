@@ -20,5 +20,7 @@ Route::get('/contact', [ContactController::class, 'report_show'])->name('report_
 Route::post('/contact/store', [ContactController::class, 'reporting']) ->name('reporting');
 
 Route::get('/parkingFee', [ParkingFeeController::class, 'parkingFee_show'])->name('parkingFee_show');
+Route::get('/captchaImage', [ParkingFeeController::class, 'create_captcha'])->name('create_captcha');
+Route::post('/parkingFee', [ParkingFeeController::class, 'check_captcha'])->name('check_captcha');
 
 Route::get('/{page_chose?}', [HomeController::class, 'home_show'])->name('home_show');
