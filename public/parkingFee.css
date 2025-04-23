@@ -1,0 +1,8 @@
+.carCont {
+    padding: 1em 2em;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: space-between;;
+    height: 84vh;
+}
+
