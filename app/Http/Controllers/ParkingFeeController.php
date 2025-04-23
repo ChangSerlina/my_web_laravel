@@ -103,9 +103,9 @@ class ParkingFeeController extends Controller
     function check_captcha(Request $request)
     {
         $userInput = $request->input('check');
-        $captcha = strtolower(session('captcha_code'));
+        $captcha = session('captcha_code');
 
-        if (strcasecmp($userInput, $captcha) == 0) {
+        if (strcasecmp($userInput, $captcha) == 0) {    // strcasecmp() 不區分大小寫
             return response()->json(['success' => true, 'message' => '驗證成功']);
         } else {
             return response()->json(['success' => false, 'message' => '驗證碼輸入錯誤']);

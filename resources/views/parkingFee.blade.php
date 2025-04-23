@@ -177,13 +177,14 @@
             <div>
                 <!-- 停車費查詢 -->
                 <div class="tab carCont">
-                    <div class="carLeft col-5 col-sm-12">
+                    <div class="carLeft col-7 col-sm-12">
                         <h2>停車繳費查詢</h2>
                         <p>請輸入車牌號碼，查詢未繳之停車繳費單:<br>
                             (輸入範例：ABC-5678或123-ABC)
                         </p><br>
 
-                        <form target="carcheck" method="post" action="carcheck.php" id="parkForm">
+                        <form target="carcheck" method="post" action="parkingFeeCheck" id="parkForm">
+                            @csrf
                             <div class="col-11 col-sm-11 car">
                                 <label for="number">*車牌號碼: </label>
                                 <input type="text" title="車牌號碼" placeholder="請輸入您的車牌號碼" id="carid" name="carid" required>

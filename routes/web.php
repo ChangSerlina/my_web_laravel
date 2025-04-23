@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParkingFeeController;
+use App\Http\Controllers\ParkingFeeCheckController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +23,7 @@ Route::post('/contact/store', [ContactController::class, 'reporting']) ->name('r
 Route::get('/parkingFee', [ParkingFeeController::class, 'parkingFee_show'])->name('parkingFee_show');
 Route::get('/captchaImage', [ParkingFeeController::class, 'create_captcha'])->name('create_captcha');
 Route::post('/parkingFee', [ParkingFeeController::class, 'check_captcha'])->name('check_captcha');
+
+Route::post('/parkingFeeCheck', [ParkingFeeCheckController::class, 'parkingFeeCheck_show'])->name('parkingFeeCheck_show');
 
 Route::get('/{page_chose?}', [HomeController::class, 'home_show'])->name('home_show');
