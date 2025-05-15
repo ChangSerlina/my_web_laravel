@@ -17,13 +17,16 @@ use App\Http\Controllers\ParkingFeeCheckController;
 |
 */
 
+// 關於我
 Route::get('/contact', [ContactController::class, 'report_show'])->name('report_show');
-Route::post('/contact/store', [ContactController::class, 'reporting']) ->name('reporting');
+Route::post('/contact/store', [ContactController::class, 'reporting'])->name('reporting');
 
+// 停車費查詢
 Route::get('/parkingFee', [ParkingFeeController::class, 'parkingFee_show'])->name('parkingFee_show');
 Route::get('/captchaImage', [ParkingFeeController::class, 'create_captcha'])->name('create_captcha');
 Route::post('/parkingFee', [ParkingFeeController::class, 'check_captcha'])->name('check_captcha');
 
 Route::post('/parkingFeeCheck', [ParkingFeeCheckController::class, 'parkingFeeCheck_show'])->name('parkingFeeCheck_show');
 
+// 首頁
 Route::get('/{page_chose?}', [HomeController::class, 'home_show'])->name('home_show');
