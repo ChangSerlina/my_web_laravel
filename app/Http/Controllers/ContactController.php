@@ -18,10 +18,10 @@ class ContactController extends Controller
     {
         try {
             contact::create([
-                'name' => $request->name ?? "",
-                'email' => $request->email ?? "",
-                'phone' => $request->phone ?? "",
-                'information' => $request->information ?? "",
+                'name' => $request->name ?? null,
+                'email' => $request->email ?? null,
+                'phone' => $request->phone ?? null,
+                'information' => $request->information ?? null,
             ]);
 
             return redirect()->route('report_show')->with('success', '送出成功');
