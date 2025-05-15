@@ -20,9 +20,9 @@ class ParkingFeeController extends Controller
     function create_captcha()
     {
         try {
-            $str = $this->rand_str(5);
-            $width = 150;
-            $height = 75;
+            $str = $this->rand_str(4);
+            $width = 90;
+            $height = 45;
 
             $image = imagecreatetruecolor($width, $height);
 
@@ -55,9 +55,9 @@ class ParkingFeeController extends Controller
             }
 
             // 繪製驗證碼中的字元
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 4; $i++) {
                 // 依序為 圖片,字體大小,旋轉角度,字元間距,垂直位置
-                imagettftext($image, rand(20, 25), rand(-45, 45), $i * 20 + 17, rand(40, 60), $this->rand_color($image), $font, $str[$i]);
+                imagettftext($image, rand(20, 25), rand(-45, 45), $i * 20 + 12, rand(30, 40), $this->rand_color($image), $font, $str[$i]);
             }
 
             ob_start();
@@ -77,7 +77,8 @@ class ParkingFeeController extends Controller
      */
     function rand_str($length)
     {
-        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        // $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $chars = '0123456789';
         $str = '';
         for ($i = 0; $i < $length; $i++) {
             $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
