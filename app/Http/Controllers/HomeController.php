@@ -20,20 +20,5 @@ class HomeController extends Controller
             $page_chose_1 = 'include.default';
             return view('home', compact('page_chose_1', 'articles'));
         }
-
-        // switch ($page_chose) {
-        //     case 'osaka':
-        //         $page_chose_1 = 'include.osaka';
-        //         return view('home', compact('page_chose_1', 'articles'));
-        //     case 'tainan':
-        //         $page_chose_1 = 'include.tainan';
-        //         return view('home', compact('page_chose_1', 'articles'));
-        //     case 'malaysia':
-        //         $page_chose_1 = 'include.malaysia';
-        //         return view('home', compact('page_chose_1', 'articles'));
-        //     default:
-        //         $page_chose_1 = 'include.container';
-        //         return view('home', compact('page_chose_1', 'articles'));
-        // }
     }
 }
