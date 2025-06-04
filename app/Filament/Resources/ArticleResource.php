@@ -32,8 +32,8 @@ class ArticleResource extends Resource
                 Forms\Components\TextInput::make('route')->required(),
                 Forms\Components\TextInput::make('title')->required(),
                 Forms\Components\TextInput::make('image')->required(),
-                Forms\Components\TextInput::make('context'),
                 Forms\Components\TextInput::make('date'),
+                Forms\Components\Textarea::make('context')->maxLength(255)->columnSpan('full')->autosize(), // 自動根據內容調整高度
             ]);
     }
 
@@ -49,11 +49,11 @@ class ArticleResource extends Resource
             ->filters([
                 //
                 Tables\Filters\SelectFilter::make('class')
-                ->options([
-                    'home' => 'home',
-                    'parkingFee' => 'parkingFee',
-                    'contact' => 'contact',
-                ]),
+                    ->options([
+                        'home' => 'home',
+                        'parkingFee' => 'parkingFee',
+                        'contact' => 'contact',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

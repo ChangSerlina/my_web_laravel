@@ -1,0 +1,20 @@
+textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+
+    @media (max-width: 54em) {
+        height: 55vh;
+        font-size: 105%;
+    }
+
+    @media (min-width: 54em) {
+        height: 40vh;
+        font-size: 110%;
+    }
+
+    @media (min-width: 114em) {
+        height: 40vh;
+        font-size: 155%;
+    }
+}
