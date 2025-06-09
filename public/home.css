@@ -143,6 +143,12 @@ section {
 /**
   * Blog page
   */
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .previews {
     @media (max-width: 54em) {
         display: flex;
@@ -346,7 +352,7 @@ section {
     padding-left: 12%;
 }
 
-.footer__left .fa{
+.footer__left .fa {
     margin-right: 1em;
 }
 

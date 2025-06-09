@@ -94,7 +94,7 @@ class ParkingFeeCheckController extends Controller
             if (app()->environment('local')) {
                 $response = Http::withoutVerifying()->timeout(10)->get($_API);  // 開發先繞過 ssl
             } else {
-                $response = Http::timeout(60)->get($_API);  // 設定 60 秒 timeout
+                $response = Http::timeout(300)->get($_API);  // 設定 300 秒 timeout
             }
 
             $response = json_decode($response);
