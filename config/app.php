@@ -59,6 +59,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'hasVerifiedEmail' => false,
+    
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
