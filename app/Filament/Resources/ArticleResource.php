@@ -5,13 +5,18 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\article;
-use Filament\Forms;
-use Filament\Forms\Form;
+
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+// 表單內的元件
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\FileUpload;
 
 class ArticleResource extends Resource
 {
@@ -23,17 +28,40 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-                //
-                Forms\Components\Select::make('class')->options([
-                    'home' => 'home',
-                    'parkingFee' => 'parkingFee',
-                    'contact' => 'contact',
-                ])->required(),
-                Forms\Components\TextInput::make('route')->required(),
-                Forms\Components\TextInput::make('title')->required(),
-                Forms\Components\TextInput::make('image')->required(),
-                Forms\Components\TextInput::make('date'),
-                Forms\Components\Textarea::make('context')->maxLength(5000)->columnSpan('full')->autosize(), // 自動根據內容調整高度
+                Section::make('圖片設定')
+                    ->schema([
+                        //
+                        FileUpload::make('image')
+                            ->image()
+                            ->imageEditor()  // editable
+                            ->imagePreviewHeight('250') // 啟用預覽
+                            ->imageEditorAspectRatios([  // for cropping image
+                                null,
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->visibility('public') // Set visibility to private??
+                            ->label('圖片') // Label for the file upload field 
+                            ->disk('public') // Specify the disk where files will be stored
+                            ->directory('image') // Specify the directory within the disk
+                            ->preserveFilenames() // Preserve original filenames
+                            ->maxSize(30760) // Set maximum file size in KB (3 MB in this case)
+                            ->downloadable()
+                    ])->columns(1),
+                Section::make('基本資料')
+                    ->schema([
+                        //
+                        Forms\Components\Select::make('class')->options([
+                            'home' => 'home',
+                            'parkingFee' => 'parkingFee',
+                            'contact' => 'contact',
+                        ])->required()->label('頁籤'),
+                        Forms\Components\TextInput::make('route')->required()->label('網址路徑'),
+                        Forms\Components\TextInput::make('title')->required()->label('標題'),
+                        Forms\Components\TextInput::make('date')->label('顯示日期'),
+                        Forms\Components\Textarea::make('context')->label('內文')->maxLength(5000)->columnSpan('full')->autosize(), // 自動根據內容調整高度
+                    ])->columns(2),
             ]);
     }
 
