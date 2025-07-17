@@ -10,19 +10,7 @@
                         ? asset('storage/' . $article->image)
                         : asset('images/osakajo.jpg');
                 @endphp
-
-                @switch($page_chose_1)
-                @case('include.osaka')
                 <figure class="absolute-bg preview__img" style="background-image: url('{{ $imagePath }}');"></figure>
-                @case('include.tainan')
-                <figure class="absolute-bg preview__img" style="background-image: url('{{ $imagePath }}');"></figure>
-                @case('include.malaysia')
-                <figure class="absolute-bg preview__img" style="background-image: url('{{ $imagePath }}');"></figure>
-                @case('parkingFee')
-                <figure class="absolute-bg preview__img" style="background-image: url('{{ $imagePath }}');"></figure>
-                @default
-                <figure class="absolute-bg preview__img" style="background-image: url('{{ $imagePath }}');"></figure>
-                @endswitch
                 @endforeach
                 @endisset
 
