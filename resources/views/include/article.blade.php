@@ -12,4 +12,14 @@
         </li>
         @endforeach
         @endisset
+
+        <div class="tabs">
+            @if($pre_article_route != "")
+            <a href="{{ route('home_show', ['page_chose' => $pre_article_route]) }}">←上一篇</a>
+            @endif
+
+            @if($next_article_route != "")
+            <a href="{{ route('home_show', ['page_chose' => $next_article_route]) }}">→下一篇</a>
+            @endif
+        </div>
     </ul>
