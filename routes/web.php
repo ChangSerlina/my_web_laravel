@@ -26,13 +26,12 @@ use Google\Client;
 // Google OAuth 登入
 Route::get('/auth/google', function () {
     return Socialite::driver('google')
-    ->stateless()
     ->scopes(['openid', 'profile', 'email']) // 確保包含 openid
     ->redirect();
 })->name('auth.google'); // ⬅️ 給路由命名
 
 Route::get('/auth/google/callback', function () {
-    $googleUser = Socialite::driver('google')->stateless()->user();
+    $googleUser = Socialite::driver('google')->user();
 
     // 檢查 email 是否已經存在於系統中
     $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
