@@ -9,6 +9,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;    // Socialite for OAuth
+use Google\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,53 @@ use Illuminate\Http\Request;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Google OAuth 登入
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('auth.google'); // ⬅️ 給路由命名
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    // 驗證 id_token（可選，建議做）
+    $idToken = $googleUser->id_token;
+    // 用 Google API 驗證 $idToken
+    $client = new Client();
+    $client->setClientId(config('services.google.client_id'));
+    $payload = $client->verifyIdToken($idToken);
+
+    if ($payload) {
+        $userid = $payload['sub'];
+        // If request specified a G Suite domain:
+        //$domain = $payload['hd'];
+
+        // 檢查 email 是否已經存在於系統中
+        $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
+
+        if(!$user) {
+            $user = \App\Models\User::create([
+                'email' => $googleUser->getEmail(),
+                'name' => $googleUser->getName(),
+                // 'avatar' => $googleUser->getAvatar(), // 可選，紀錄 Google 頭像
+                'google_id' => $userid,
+            ]);
+        }
+
+        Auth::login($user);
+
+        if (!$user->canAccessPanel(app(\Filament\Panel::class))) {
+            Auth::logout();
+            return redirect('/admin/login')->withErrors(['auth' => '您沒有權限進入後台']);
+        }else {
+            // 如果有權限，導向到後台
+            return redirect('/admin');
+        }
+    } else {
+        // Invalid ID token
+        return redirect('/admin/login')->withErrors(['google' => 'Google 登入失敗，請稍後再試。']);
+    }
+});
 
 // 發送測試信
 // Route::get('/sendTestMail', [MailController::class, 'send']);

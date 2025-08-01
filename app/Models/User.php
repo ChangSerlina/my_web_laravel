@@ -23,6 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'name',
         'email',
         'password',
+        'team_id',
+        'google_id',
     ];
 
     /**
@@ -47,10 +49,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
+        // 檢查是否有權限訪問 Filament 面板
         if(config('app.hasVerifiedEmail')){
-            return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
+            return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail() && $this->team_id !== '0';
         }else{
-            return str_ends_with($this->email, '@gmail.com');
+            return str_ends_with($this->email, '@gmail.com') && $this->team_id !== '0';
         }
     }
 }
