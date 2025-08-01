@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
-use App\Models\article;
+use App\Models\Article;
 
 use Filament\Resources\Resource;
 use Filament\Tables;

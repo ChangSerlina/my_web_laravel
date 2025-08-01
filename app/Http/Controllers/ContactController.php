@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\contact;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\service\db_common;
 use Illuminate\Support\Facades\Mail;
@@ -18,7 +18,7 @@ class ContactController extends Controller
     public function reporting(Request $request)
     {
         try {
-            contact::create([
+            Contact::create([
                 'name' => $request->name ?? null,
                 'email' => $request->email ?? null,
                 'phone' => $request->phone ?? null,
