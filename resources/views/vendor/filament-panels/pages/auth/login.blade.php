@@ -1,6 +1,6 @@
 <x-filament-panels::page.simple>
     @if ($errors->has('auth'))
-    <div class="text-danger">{{ $errors->first('auth') }}</div>
+    <div class="text-danger" style="color: red;">{{ $errors->first('auth') }}</div>
     @endif
     
     @if (filament()->hasRegistration())

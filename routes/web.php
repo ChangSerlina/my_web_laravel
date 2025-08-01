@@ -25,48 +25,35 @@ use Google\Client;
 
 // Google OAuth 登入
 Route::get('/auth/google', function () {
-    return Socialite::driver('google')->redirect();
+    return Socialite::driver('google')
+    ->stateless()
+    ->scopes(['openid', 'profile', 'email']) // 確保包含 openid
+    ->redirect();
 })->name('auth.google'); // ⬅️ 給路由命名
 
 Route::get('/auth/google/callback', function () {
-    $googleUser = Socialite::driver('google')->user();
+    $googleUser = Socialite::driver('google')->stateless()->user();
 
-    // 驗證 id_token（可選，建議做）
-    $idToken = $googleUser->id_token;
-    // 用 Google API 驗證 $idToken
-    $client = new Client();
-    $client->setClientId(config('services.google.client_id'));
-    $payload = $client->verifyIdToken($idToken);
+    // 檢查 email 是否已經存在於系統中
+    $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
 
-    if ($payload) {
-        $userid = $payload['sub'];
-        // If request specified a G Suite domain:
-        //$domain = $payload['hd'];
+    if(!$user) {
+        $user = \App\Models\User::create([
+            'email' => $googleUser->getEmail(),
+            'name' => $googleUser->getName(),
+            // 'avatar' => $googleUser->getAvatar(), // 可選，紀錄 Google 頭像
+            'google_id' => $googleUser->getId(),    // 儲存 Google ID
+        ]);
+    }
 
-        // 檢查 email 是否已經存在於系統中
-        $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
+    Auth::login($user);
 
-        if(!$user) {
-            $user = \App\Models\User::create([
-                'email' => $googleUser->getEmail(),
-                'name' => $googleUser->getName(),
-                // 'avatar' => $googleUser->getAvatar(), // 可選，紀錄 Google 頭像
-                'google_id' => $userid,
-            ]);
-        }
-
-        Auth::login($user);
-
-        if (!$user->canAccessPanel(app(\Filament\Panel::class))) {
-            Auth::logout();
-            return redirect('/admin/login')->withErrors(['auth' => '您沒有權限進入後台']);
-        }else {
-            // 如果有權限，導向到後台
-            return redirect('/admin');
-        }
-    } else {
-        // Invalid ID token
-        return redirect('/admin/login')->withErrors(['google' => 'Google 登入失敗，請稍後再試。']);
+    if (!$user->canAccessPanel(app(\Filament\Panel::class))) {
+        Auth::logout();
+        return redirect('/admin/login')->withErrors(['auth' => '您沒有權限進入後台!']);
+    }else {
+        // 如果有權限，導向到後台
+        return redirect('/admin');
     }
 });
 
