@@ -43,13 +43,20 @@ Route::get('/auth/google/callback', function () {
             // 'avatar' => $googleUser->getAvatar(), // 可選，紀錄 Google 頭像
             'google_id' => $googleUser->getId(),    // 儲存 Google ID
         ]);
+    }else {
+        // 如果已經存在，更新個人資料
+        \App\Models\User::where('email', $googleUser->getEmail())->update([
+            'name' => $googleUser->getName(),
+            // 'avatar' => $googleUser->getAvatar(), // 可選，紀錄 Google 頭像
+            'google_id' => $googleUser->getId(),    // 儲存 Google ID
+        ]);
     }
 
     Auth::login($user);
 
     if (!$user->canAccessPanel(app(\Filament\Panel::class))) {
         Auth::logout();
-        return redirect('/admin/login')->withErrors(['auth' => '您沒有權限進入後台!']);
+        return redirect('/admin/login')->withErrors(['auth' => '很抱歉，您沒有權限進入後台!請與管理人員聯絡']);
     }else {
         // 如果有權限，導向到後台
         return redirect('/admin');
