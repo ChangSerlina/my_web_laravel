@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\ArticleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/getToken', [AuthController::class, 'getToken'])->name('api.getToken');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/articles', [ArticleController::class, 'index'])->name('api.articles.index');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
