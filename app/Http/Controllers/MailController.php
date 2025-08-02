@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class MailController extends Controller
 {
@@ -65,5 +66,25 @@ class MailController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    // 顯示驗證信通知頁面
+    public function notice()
+    {
+        return view('auth.verify-email');
+    }
+
+    // 處理驗證信連結
+    public function verify(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+        return redirect('/admin');
+    }
+
+    // 重新發送驗證信
+    public function resend(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', '已重新發送驗證信!');
     }
 }
