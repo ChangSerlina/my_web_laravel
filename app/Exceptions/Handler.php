@@ -27,4 +27,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+            if ($request->is('admin*')) {
+                return redirect('/admin/login')->withErrors([
+                    'auth' => '很抱歉，您沒有權限進入後台!請與管理人員聯絡'
+                ]);
+            }
+        }
+        return parent::render($request, $exception);
+    }
 }

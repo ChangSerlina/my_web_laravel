@@ -75,14 +75,7 @@ class AuthController extends Controller
             }
 
             Auth::login($user);
-
-            if (!$user->canAccessPanel(app(\Filament\Panel::class))) {
-                Auth::logout();
-                return redirect('/admin/login')->withErrors(['auth' => '很抱歉，您沒有權限進入後台!請與管理人員聯絡']);
-            } else {
-                // 如果有權限，導向到後台
-                return redirect('/admin');
-            }
+            return redirect('/admin');
         } catch (\Exception $e) {
             return redirect('/admin/login')->withErrors(['auth' => 'Google 登入失敗，請稍後再試。']);
         }
