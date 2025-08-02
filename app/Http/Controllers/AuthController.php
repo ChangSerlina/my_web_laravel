@@ -66,6 +66,7 @@ class AuthController extends Controller
                     'google_id' => $googleUser->getId(), // 儲存 Google ID
                     'password' => bcrypt(Str::random(16)), // 隨機密碼，因為 Google 登入不需要密碼
                 ]);
+                $user = \App\Models\User::where('email', $googleUser->getEmail())->first();
             } else {
                 // 如果已經存在，更新個人資料
                 \App\Models\User::where('email', $googleUser->getEmail())->update([
