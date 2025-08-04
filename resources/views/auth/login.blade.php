@@ -9,6 +9,7 @@
 
     .previews__container {
         margin: 0;
+        margin-bottom: 1rem;
     }
 </style>
 

@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -30,7 +32,9 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+        // 權限異常處理
+        if ($exception instanceof AuthorizationException) {
+            // 如果是後台請求，則重定向到後台登入頁面
             if ($request->is('admin*')) {
                 return redirect('/admin/login')->withErrors([
                     'auth' => '很抱歉，您沒有權限進入後台!請與管理人員聯絡'
