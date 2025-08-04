@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 /**
  * @group api
@@ -27,14 +28,15 @@ class ApiTest extends TestCase
         return $token;
     }
 
-    /** @can_get_users */
-    public function can_get_users()
+    /** @can_get_user_info */
+    public function test_can_get_user_info()
     {
         $token = $this->authenticate();
 
         // Assert: 使用 token 呼叫 /user
         $res = $this->withHeaders([
             'Authorization' => "Bearer $token",
+            'Accept' => 'application/json',
         ])->getJson('/api/user');
 
         // dd($res->json()); // 這裡可以檢查回傳的資料格式
@@ -42,13 +44,33 @@ class ApiTest extends TestCase
         $res->assertStatus(200);
     }
 
+    /** @can_get_user_team */
+    public function test_can_get_user_team()
+    {
+        // 建立一位使用者
+        $user = User::factory()->create();
+
+        $token = $this->authenticate();
+
+        // Assert: 使用 token 呼叫 /user
+        $res = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+            'Accept' => 'application/json',
+        ])->getJson('/api/user?name=' . $user->name);
+
+        // dd($res->json()); // 這裡可以檢查回傳的資料格式
+
+        $res->assertStatus(200);
+    }
+
     /** @can_get_articles */
-    public function can_get_articles()
+    public function test_can_get_articles()
     {
         $token = $this->authenticate();
 
         $res = $this->withHeaders([
             'Authorization' => "Bearer $token",
+            'Accept' => 'application/json',
         ])->getJson('/api/articles');
 
         // dd($res->json()); // 這裡可以檢查回傳的資料格式
