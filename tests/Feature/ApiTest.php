@@ -28,7 +28,7 @@ class ApiTest extends TestCase
         return $token;
     }
 
-    /** @can_get_user_info */
+    /** @test_can_get_user_info */
     public function test_can_get_user_info()
     {
         $token = $this->authenticate();
@@ -44,7 +44,7 @@ class ApiTest extends TestCase
         $res->assertStatus(200);
     }
 
-    /** @can_get_user_team */
+    /** @test_can_get_user_team */
     public function test_can_get_user_team()
     {
         // 建立一位使用者
@@ -63,7 +63,7 @@ class ApiTest extends TestCase
         $res->assertStatus(200);
     }
 
-    /** @can_get_articles */
+    /** @test_can_get_articles */
     public function test_can_get_articles()
     {
         $token = $this->authenticate();
