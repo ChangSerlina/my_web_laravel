@@ -22,6 +22,10 @@ class ArticleController extends Controller
 
         // 撈資料
         $articles = $query->get();
+        if ($articles->isEmpty()) {
+            return response()->json(['message' => 'Article not found'], 404);
+        }
+        
         return response()->json($articles, 200, [], JSON_UNESCAPED_UNICODE); // 第二個參數是status Code
     }
 
