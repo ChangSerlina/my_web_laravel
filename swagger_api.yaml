@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  title: Serlina Web API
+  description: 這是一個 Swagger API 文件
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000/api
+    description: 本地開發環境
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer token
+      description: "請輸入存取權杖"
+
+  responses:
+    UnauthorizedError:
+      description: Unauthenticated
+
+paths:
+  /getToken:
+    post:
+      tags:
+        - Token
+      summary: 取得存取權杖
+      description: 使用者登入以取得存取權杖
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - password
+              properties:
+                name:
+                  type: string
+                  example: "admin"
+                password:
+                  type: string
+      responses:
+        "200":
+          description: 成功取得存取權杖
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: "1|56b0c09c7013a65f649519f2a23dc5ba596b2d35bb3b0ad2d91e32f360886ef2"
+        "401":
+          description: 使用者名稱或密碼錯誤
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "帳號或密碼錯誤"
+  /articles:
+    get:
+      tags:
+        - Articles
+      security:
+        - BearerAuth: []
+      summary: 取得文章資訊
+      description: 取得文章資訊
+      parameters:
+        - in: query
+          name: route
+          schema:
+            type: string
+          required: false
+          description: Filter by route
+      responses:
+        "200":
+          description: 成功取得文章資訊
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  class:
+                    type: string
+                    example: "home"
+                  route:
+                    type: string
+                    example: "tainan"
+                  title:
+                    type: string
+                    example: "台南 玉井"
+                  context:
+                    type: string
+                    example: "xxx"
+                  date:
+                    type: string
+                    example: "Oct 21, 2023"
+                  image:
+                    type: string
+                    example: "image/xxx.jpg"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Article not found
+  /user:
+    get:
+      tags:
+        - Users
+      security:
+        - BearerAuth: []
+      summary: 取得使用者資訊
+      description: 取得使用者資訊
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: false
+          description: Filter by user name to get team_id
+      responses:
+        "200":
+          description: 成功取得使用者資訊
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "John Doe"
+                  team_id:
+                    type: integer
+                    example: 1
+                  google_id:
+                    type: string
+                    example: "1234567890"
+                  email:
+                    type: string
+                    example: "abc@com.tw"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: User not found
