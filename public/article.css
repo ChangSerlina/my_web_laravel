@@ -24,3 +24,7 @@
         font-size: 155%;
     }
 }
+
+.active {
+    cursor: auto;
+}
