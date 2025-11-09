@@ -3,11 +3,7 @@
  * 發送測試信件
  * 
  * 範例請求方式
- * curl -X POST http://localhost/sendTestMail \
- * -d "email=serlina0504@gmail.com" \
- * -d "cc=testserlina@gmail.com" \
- * -d "bcc=deniel87deniel87@gmail.com" \
- * -d "name=Serlinaweb 會員"
+ * curl "http://localhost:8000/sendTestMail?email=serlina0504@gmail.com&cc=testserlina@gmail.com&bcc=deniel87deniel87@gmail.com&name=Serlinaweb%20會員"
  * 
  * 使用瀏覽器開 /sendTestMail?email=serlina0504@gmail.com&cc=testserlina@gmail.com&bcc=deniel87deniel87@gmail.com&name=Serlinaweb%20會員
  */
