@@ -8,7 +8,7 @@
         <li class="preview" itemprop="blogPost" itemscope itemtype="">
             <span class="preview__date" itemprop="datePublished">{{ $article->date }}</span>
             <h2 class="preview__header" itemprop="name">{{ $article->title }}</h2>
-            <textarea name="" id="" disabled>{{ $article->context }}</textarea>
+            <div id="context">{!! $article->context !!}</div>
         </li>
         @endforeach
         @endisset

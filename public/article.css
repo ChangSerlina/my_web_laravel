@@ -1,7 +1,11 @@
-textarea {
+#context {
     width: 100%;
     border: none;
     resize: none;
+    overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-alpha) var(--color-lightgray);
 
     @media (max-width: 54em) {
         height: 55vh;

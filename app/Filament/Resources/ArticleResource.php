@@ -60,7 +60,10 @@ class ArticleResource extends Resource
                         Forms\Components\TextInput::make('route')->required()->label('網址路徑'),
                         Forms\Components\TextInput::make('title')->required()->label('標題'),
                         Forms\Components\TextInput::make('date')->label('顯示日期'),
-                        Forms\Components\Textarea::make('context')->label('內文')->maxLength(5000)->columnSpan('full')->autosize(), // 自動根據內容調整高度
+                        Forms\Components\RichEditor::make('context')->label('內文')
+                                    ->required()
+                                    ->maxLength(5000)
+                                    ->columnSpanFull(),
                     ])->columns(2),
             ]);
     }
