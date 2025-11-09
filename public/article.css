@@ -6,6 +6,8 @@
     overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: var(--color-alpha) var(--color-lightgray);
+    text-align: justify;
+    padding-right: 10px;
 
     @media (max-width: 54em) {
         height: 55vh;
