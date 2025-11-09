@@ -7,7 +7,7 @@
                 <span class="preview__date" itemprop="datePublished">{{ $article->date }}</span>
                 <h2 class="preview__header" itemprop="name">{{ $article->title }}</h2>
                 @if(strlen($article->context)>30)
-                <p class="preview__excerpt" itemprop="description">{{mb_substr($article->context, 0, 30,'UTF-8')}}...</p>
+                <p class="preview__excerpt" itemprop="description">{!! mb_substr(strip_tags($article->context), 0, 35, 'UTF-8') !!} ...</p>
                 @else
                 <p class="preview__excerpt" itemprop="description">{{ $article->context }}</p>
                 @endif
