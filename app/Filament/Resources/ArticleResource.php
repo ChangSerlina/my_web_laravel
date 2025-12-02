@@ -59,7 +59,7 @@ class ArticleResource extends Resource
                         ])->required()->label('頁籤'),
                         Forms\Components\TextInput::make('route')->required()->label('網址路徑'),
                         Forms\Components\TextInput::make('title')->required()->label('標題'),
-                        Forms\Components\TextInput::make('date')->label('顯示日期'),
+                        Forms\Components\DatePicker::make('date')->required()->label('顯示日期'),
                         Forms\Components\RichEditor::make('context')->label('內文')
                                     ->required()
                                     ->maxLength(5000)
