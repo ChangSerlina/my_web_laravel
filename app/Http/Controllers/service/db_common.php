@@ -19,22 +19,22 @@ class db_common
         return $article;
     }
 
-    public static function select_pre_by_id_class($id,$class)
+    public static function select_pre_by_date_class($date,$class)
     {
-        $route = Article::where('id', '<', $id)
+        $route = Article::where('date', '<', $date)
                   ->where('class', $class)
-                  ->orderBy('id', 'desc')
-                  ->select('route') // 指定只取出 route 欄位
+                  ->orderBy('date', 'desc')
+                  ->select('route', 'title')
                   ->first();
         return $route;
     }
 
-    public static function select_next_by_id_class($id,$class)
+    public static function select_next_by_date_class($date,$class)
     {
-        $route = Article::where('id', '>', $id)
+        $route = Article::where('date', '>', $date)
                   ->where('class', $class)
-                  ->orderBy('id', 'asc')
-                  ->select('route') // 指定只取出 route 欄位
+                  ->orderBy('date', 'asc')
+                  ->select('route', 'title')
                   ->first();
         return $route;
     }

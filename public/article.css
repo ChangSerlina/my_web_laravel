@@ -28,3 +28,8 @@
 .active {
     cursor: auto;
 }
+
+.article_title {
+    font-weight: bold;
+    color: var(--color-drak-grey);
+}
