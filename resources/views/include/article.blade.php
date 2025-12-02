@@ -6,7 +6,7 @@
         @isset($articles)
         @foreach ($articles as $article)
         <li class="preview" itemprop="blogPost" itemscope itemtype="">
-            <span class="preview__date" itemprop="datePublished">{{ $article->date }}</span>
+            <span class="preview__date" itemprop="datePublished">{{ $article->date_formatted }}</span>
             <h2 class="preview__header" itemprop="name">{{ $article->title }}</h2>
             <div id="context">{!! $article->context !!}</div>
         </li>

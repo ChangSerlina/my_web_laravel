@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Article extends Model
 {
@@ -18,4 +19,10 @@ class Article extends Model
         'date',
         'image'
     ];
+
+    public function getDateFormattedAttribute(): string
+    {
+        return Carbon::parse($this->date)->format('M d, Y');
+    }
+
 }
