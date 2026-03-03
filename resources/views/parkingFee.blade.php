@@ -31,6 +31,9 @@
             return false;
         }
 
+        // 顯示等待動畫
+        showLoading();
+        
         $.ajax({
             type: "POST",
             url: "/parkingFee",
@@ -40,33 +43,146 @@
             },
             success: function(response) {
                 if (response.success) {
-                    // 驗證成功後再查詢停車資訊
-                    $.ajax({
-                        type: "POST",
-                        url: "/parkingFeeCheck",
-                        data: {
-                            carid: carid,
-                            location: location,
-                            cartype: cartype,
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            $('#carResult').show();
-                            $('#carResultContent').empty().html(data.html); // 顯示查詢結果
-                            refreshImage();
-                            $('#captchaText').val('');
-                        },
-                        error: function(xhr) {
-                            alert('查詢失敗，請稍後再試');
+                    // 驗證成功後再查詢停車資訊（繼續顯示等待動畫）
+                    // 若選擇 ALL 則依序查詢所有縣市，並分別顯示縣市標題與該縣市的查詢結果。
+                    if (location === 'ALL') {
+                        // 列出要查詢的縣市 key 與顯示名稱
+                        var locationsList = [
+                            {key: 'Keelung', name: '基隆市'},
+                            {key: 'Taipei', name: '台北市'},
+                            {key: 'NewTaipei', name: '新北市'},
+                            {key: 'Taoyuan', name: '桃園市'},
+                            {key: 'Hsinchu', name: '新竹市'},
+                            {key: 'Hsinchu_s', name: '新竹縣'},
+                            {key: 'Taichung', name: '台中市'},
+                            {key: 'Changhua', name: '彰化縣'},
+                            {key: 'Chiayi', name: '嘉義市'},
+                            {key: 'Tainan', name: '台南市'},
+                            {key: 'Kaohsiung', name: '高雄市'},
+                            {key: 'Pingtung', name: '屏東縣'},
+                            {key: 'Taitung', name: '台東縣'}
+                        ];
+
+                        $('#carResult').show();
+                        $('#carResultContent').empty();
+
+                        var anyFound = false;
+                        var idx = 0;
+                        var counts = {};
+
+                        function queryNextCity() {
+                            if (idx >= locationsList.length) {
+                                hideLoading();
+                                // 建立摘要顯示：查詢結果 / 車牌號碼 / 各縣市筆數
+                                var out = '';
+                                out += '<h2>查詢結果</h2>';
+                                out += '<p>車牌號碼: ' + (carid || '') + '</p>';
+                                out += '<p>查詢縣市:</p>';
+                                out += '<div class="city-summary">';
+                                locationsList.forEach(function(l) {
+                                    var c = counts[l.name] || 0;
+                                    out += '<div>' + l.name + ' ' + c + '筆</div>';
+                                });
+                                out += '</div>';
+
+                                $('#carResultContent').html(out);
+
+                                refreshImage();
+                                $('#captchaText').val('');
+                                return;
+                            }
+
+                            var loc = locationsList[idx++];
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/parkingFeeCheck",
+                                data: {
+                                    carid: carid,
+                                    location: loc.key,
+                                    cartype: cartype,
+                                    _token: $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(data) {
+                                    // 從後端回傳的 HTML 推算筆數（若後端回傳格式不同，請再調整）
+                                    var count = 0;
+                                    if (data && data.html && data.html.trim() !== '') {
+                                        var html = data.html;
+                                        // 優先嘗試統計 <tr> 數量（減去表頭），否則嘗試以特定關鍵字判定
+                                        var trMatches = html.match(/<tr\b/gi) || [];
+                                        var thMatches = html.match(/<th\b/gi) || [];
+                                        count = trMatches.length;
+                                        if (thMatches.length > 0 && count > 0) {
+                                            // 假設表頭佔一列，減去一列
+                                            count = Math.max(0, count - 1);
+                                        }
+
+                                        // 若沒有 <tr>，檢查是否有明確的「查無資料」或空字串
+                                        if (count === 0) {
+                                            var noDataKeywords = /查無資料|無資料|沒有資料|0筆/;
+                                            if (noDataKeywords.test(html)) {
+                                                count = 0;
+                                            } else {
+                                                // 嘗試以元素節點數量作為替代（如 list item）
+                                                var tmp = document.createElement('div');
+                                                tmp.innerHTML = html;
+                                                var rowLike = tmp.querySelectorAll('tr, li, .result-item, .row');
+                                                count = rowLike.length;
+                                            }
+                                        }
+
+                                        if (count > 0) anyFound = true;
+                                    } else {
+                                        count = 0;
+                                    }
+
+                                    counts[loc.name] = count;
+                                    // 小幅延遲以避免短時間內大量併發請求
+                                    setTimeout(queryNextCity, 150);
+                                },
+                                    error: function(xhr) {
+                                        // 發生錯誤視為 0 筆，繼續下一個
+                                        counts[loc.name] = 0;
+                                        setTimeout(queryNextCity, 150);
+                                    }
+                            });
                         }
-                    });
+
+                        // 開始逐一查詢
+                        queryNextCity();
+                    } else {
+                        // 單一縣市查詢（保留原行為）
+                        $.ajax({
+                            type: "POST",
+                            url: "/parkingFeeCheck",
+                            data: {
+                                carid: carid,
+                                location: location,
+                                cartype: cartype,
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(data) {
+                                hideLoading();
+                                $('#carResult').show();
+                                $('#carResultContent').empty().html(data.html); // 顯示查詢結果
+                                refreshImage();
+                                $('#captchaText').val('');
+                            },
+                            error: function(xhr) {
+                                hideLoading();
+                                alert('查詢失敗，請稍後再試');
+                            }
+                        });
+                    }
                 } else {
+                    hideLoading();
                     alert(response.message); // 驗證失敗
                     refreshImage();
                     $('#captchaText').val('').focus();
                 }
             },
             error: function(xhr) {
+                hideLoading();
                 alert('伺服器錯誤');
             }
         });
@@ -76,6 +192,34 @@
         // 生成一個隨機的查詢字符串，以便重新加載圖像
         var img = document.getElementById('captcha');
         img.src = '/captchaImage?' + new Date().getTime();
+    }
+
+    // Loading dots helper
+    var _loadingInterval = null;
+    function showLoading() {
+        var el = document.getElementById('loadingDots');
+        if (!el) return;
+        el.style.display = 'block';
+        el.textContent = '查詢中';
+        if (_loadingInterval) clearInterval(_loadingInterval);
+        _loadingInterval = setInterval(function() {
+            if (el.textContent.endsWith('...')) {
+                el.textContent = '查詢中';
+            } else {
+                el.textContent += '.';
+            }
+        }, 500);
+    }
+
+    function hideLoading() {
+        var el = document.getElementById('loadingDots');
+        if (_loadingInterval) {
+            clearInterval(_loadingInterval);
+            _loadingInterval = null;
+        }
+        if (el) {
+            el.style.display = 'none';
+        }
     }
 
     // 監聽事件
@@ -145,6 +289,7 @@
                                     <td>*縣市:</td>
                                     <td><select name="location" id="location" style="width: 18ch;">
                                             <option value="">請選擇查詢縣市</option>
+                                            <option value="ALL">所有縣市(耗時較長請耐心等候)</option>
                                             <option value="Keelung">基隆市</option>
                                             <option value="Taipei">台北市</option>
                                             <option value="NewTaipei">新北市</option>
@@ -192,6 +337,9 @@
                             </div>
                         </form>
                     </div>
+                    <!-- loading dots (顯示於查詢與結果區間) -->
+                    <div id="loadingDots" style="display:none; margin:10px 0; font-weight:bold;">查詢中</div>
+
                     <!-- 送出查詢後的結果，預設隱藏 -->
                     <div class="col-12 col-sm-12" id="carResult">
                         <div id="carResultContent"></div> <!-- 用這個來放查詢結果 -->
