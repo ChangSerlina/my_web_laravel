@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:8000/api
+  - url: http://localhost:8080/api
     description: 本地開發環境
 
 components:
@@ -153,3 +153,51 @@ paths:
           $ref: "#/components/responses/UnauthorizedError"
         "404":
           description: User not found
+  /consultations:
+    post:
+      tags:
+        - Consultations
+      security:
+        - BearerAuth: []
+      summary: 預約諮詢
+      description: 預約諮詢資訊
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - phone
+                - date
+                - description
+              properties:
+                name:
+                  type: string
+                  example: "admin"
+                phone:
+                  type: string
+                  example: "0912345678"
+                date:
+                  type: string
+                  format: date
+                  example: "2026-03-04"
+                description:
+                  type: string
+                  example: "需要諮詢的內容"
+      responses:
+        "200":
+          description: 成功預約諮詢
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "預約成功"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "400":
+          description: Invalid input

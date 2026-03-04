@@ -75,7 +75,7 @@
                                 hideLoading();
                                 // 建立摘要顯示：查詢結果 / 車牌號碼 / 各縣市筆數
                                 var out = '';
-                                out += '<h2>查詢結果</h2>';
+                                out += '<hr><h2>查詢結果</h2>';
                                 out += '<p>車牌號碼: ' + (carid || '') + '</p>';
                                 out += '<p>查詢縣市:</p>';
                                 out += '<div class="city-summary">';
