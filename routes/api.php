@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\ArticleController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +22,6 @@ Route::post('/getToken', [AuthController::class, 'getToken'])->name('api.getToke
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/articles', [ArticleController::class, 'index'])->name('api.articles.index');
     Route::get('/user', [UserController::class, 'index'])->name('api.user.index');
-});
+});    
+
+Route::post('/consultations', [ConsultationController::class, 'index'])->name('api.consultations.index');

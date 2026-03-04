@@ -4,6 +4,8 @@ services:
     volumes:
       - ./:/var/www
     working_dir: /var/www
+    networks:
+      - app_shared_network
 
   nginx:
     image: nginx:alpine
@@ -14,12 +16,16 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
+    networks:
+      - app_shared_network
 
   composer:
     build: .
     volumes:
       - ./:/app
     working_dir: /app
+    networks:
+      - app_shared_network
 
   mysql:
     image: mysql:8.0
@@ -32,6 +38,12 @@ services:
       MYSQL_PASSWORD: xxx
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - app_shared_network
 
 volumes:
   mysql_data:
+
+networks:
+  app_shared_network:
+    external: true
